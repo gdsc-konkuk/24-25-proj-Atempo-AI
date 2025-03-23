@@ -1,2 +1,2 @@
-# 24-25-proj-Avenir-AI
-2025 Google Solution Challenge Team 'Avenir' AI Repository
+# 24-25-proj-Atempo-AI
+2025 Google Solution Challenge Team 'Atempo' AI Repository

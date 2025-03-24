@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import Dict, List
 from gemini import analyze_patient_status
+import json
 
 app = FastAPI(
     title="Atempo Gemini API",

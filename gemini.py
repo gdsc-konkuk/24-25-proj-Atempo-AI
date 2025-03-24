@@ -24,13 +24,12 @@ def analyze_patient_status(patient_info: Dict) -> Dict:
     """
     prompt = f"""
     당신은 응급대원의 보조 역할입니다.
-    응급대원으로 부터 다음 환자 정보를 보고 필요한 진료과와 권장 조치사항을 판단해주세요.
-    환자 정보: {json.dumps(patient_info, ensure_ascii=False)}
-    
+    다음 환자 정보를 보고 필요한 진료과를 판단해주세요.
+    환자 정보: {json.dumps(patient_info, ensure_ascii=False, indent=4)}
+
     다음 형식으로 JSON 응답을 제공해주세요:
     {{
-        "required_departments": ["필요한 진료과 목록"],
-        "recommendations": ["권장 조치사항 목록"]
+        "required_departments": ["필요한 진료과 목록"]
     }}
     """
     

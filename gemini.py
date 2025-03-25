@@ -35,21 +35,12 @@ def analyze_patient_status(patient_info: Dict) -> Dict:
     
     try:
         response = model.generate_content(prompt)
-        print("API 응답:", response.text)  # 디버깅용
-        
-        if not response.text:
-            raise ValueError("API 응답이 비어있습니다.")
-            
-        try:
-            response_text = response.text.replace("```json", "").replace("```", "").strip()
-            result = json.loads(response_text)
-            if not isinstance(result, dict) or "required_departments" not in result or "recommendations" not in result:
-                raise ValueError("응답 형식이 올바르지 않습니다.")
-            return result
-        except json.JSONDecodeError as e:
-            print(f"JSON 파싱 에러: {response.text}")  # 디버깅용
-            raise ValueError(f"응답을 JSON으로 변환할 수 없습니다: {str(e)}")
-            
+        response_text = response.text.replace("```json", "").replace("```", "").strip()
+        result = json.loads(response_text)
+
+        if not isinstance(result, dict) or "required_departments" not in result:
+            raise ValueError("응답 형식이 올바르지 않습니다.")
+        return result
     except ValueError as e:
         print(f"값 검증 에러: {str(e)}")  # 디버깅용
         return {

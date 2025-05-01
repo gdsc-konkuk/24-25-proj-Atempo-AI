@@ -114,7 +114,8 @@ Return only a JSON object like:
   "travel_time": "X"
 }}
 
-Do not include unit(km, min), explanations, markdown, or extra text.
+Do not include distance unit (km) and travel time unit (min).
+Do not include explanations, markdown, or extra text.
 """
     try:
         response = llm.invoke(prompt)

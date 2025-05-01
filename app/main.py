@@ -1,3 +1,7 @@
+from dotenv import load_dotenv
+
+load_dotenv()
+
 from fastapi import FastAPI, HTTPException
 from app.schemas import RequestModel
 from app.hospital import (

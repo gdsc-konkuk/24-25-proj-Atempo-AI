@@ -1,34 +1,15 @@
-# Environment variables
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+
+# Virtual environment
+.venv/
 .env
 
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-env/
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-*.egg-info/
-.installed.cfg
-*.egg
+# macOS system files
+.DS_Store
 
-# Virtual Environment
-venv/
-ENV/
-
-# IDE
-.idea/
+# IDE/editor settings
 .vscode/
-*.swp
-*.swo 
+
+.gitignore

@@ -110,8 +110,8 @@ Assumptions:
 
 Return only a JSON object like:
 {{
-  "distance": "X.X km",
-  "travel_time": "X minutes"
+  "distance": "X.X",
+  "travel_time": "X"
 }}
 
 Do not include explanations, markdown, or extra text.

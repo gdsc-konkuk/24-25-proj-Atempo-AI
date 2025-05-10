@@ -18,27 +18,34 @@ def read_root():
 
 @app.post("/medicall")
 def medicall_endpoint(request_data: RequestModel):
-    lat = request_data.location.latitude
-    lng = request_data.location.longitude
-    radius = request_data.search_radius
-    condition = request_data.patient_condition
+    try:
+        lat = request_data.location.latitude
+        lng = request_data.location.longitude
+        radius = request_data.search_radius
+        condition = request_data.patient_condition
 
-    hospitals, error = search_hospitals(lat, lng, radius)
-    if error:
+        hospitals, error = search_hospitals(lat, lng, radius)
+        if error:
+            return {
+                "hospital_list": [],
+                "ars_message": ""
+            }
+
+        hospital_list = enrich_hospital_info(hospitals, lat, lng)
+        condition_summary = summarize_condition(condition)
+
+        ars_message = (
+            f"This is Medicall, an AI-powered emergency room matching system. A patient with {condition_summary} "
+            f"has been reported within {radius/1000:.0f} km. If your hospital can admit the patient, press 1. If not, press 2."
+        )
+
+        return {
+            "hospital_list": hospital_list,
+            "ars_message": ars_message
+        }
+
+    except Exception as e:
         return {
             "hospital_list": [],
             "ars_message": ""
         }
-
-    hospital_list = enrich_hospital_info(hospitals, lat, lng)
-    condition_summary = summarize_condition(condition)
-
-    ars_message = (
-        f"This is Medicall, an AI-powered emergency room matching system. A patient with {condition_summary} "
-        f"has been reported within {radius/1000:.0f} km. If your hospital can admit the patient, press 1. If not, press 2."
-    )
-
-    return {
-        "hospital_list": hospital_list,
-        "ars_message": ars_message
-    }

@@ -25,7 +25,7 @@ def medicall_endpoint(request_data: RequestModel):
         condition = request_data.patient_condition
 
         hospitals, error = search_hospitals(lat, lng, radius)
-        if error:
+        if error or not hospitals: 
             return {
                 "hospital_list": [],
                 "ars_message": ""

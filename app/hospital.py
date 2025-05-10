@@ -36,14 +36,13 @@ def search_hospitals(latitude, longitude, radius=5000):
         res = requests.post(url, headers=headers, json=payload)
         data = res.json()
     except:
-        return [], "API request failed"
+        return [], ""
 
     if not isinstance(data, dict):
-        return [], "Invalid response format"
+        return [], ""
 
     if "places" not in data:
-        msg = data.get("error", {}).get("message", "No places found in the given area")
-        return [], msg
+        return [], ""
 
     results = []
     seen_numbers = set()

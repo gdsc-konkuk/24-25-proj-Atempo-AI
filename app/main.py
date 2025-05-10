@@ -27,7 +27,7 @@ def medicall_endpoint(request_data: RequestModel):
     if error:
         return {
             "hospital_list": [],
-            "ars_message": "No hospitals found in the given radius. Please try again with a wider range."
+            "ars_message": ""
         }
 
     hospital_list = enrich_hospital_info(hospitals, lat, lng)

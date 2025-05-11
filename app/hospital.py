@@ -197,8 +197,6 @@ Based on the hospital's name and its listed departments, does it seem likely tha
 
 Consider hospitals that are general, large, or specialized in relevant areas as likely suitable.
 
-If the condition is broad, unclear, or general in nature, respond "Yes" as long as the hospital seems like it could reasonably provide care.
-
 Respond with "Yes" if the hospital might reasonably be able to treat the patient, even if not explicitly listed. Otherwise, respond with "No".
 
 Answer only with "Yes" or "No".
@@ -206,8 +204,21 @@ Answer only with "Yes" or "No".
     try:
         response = llm.invoke(prompt)
         result = response.content.strip().lower()
+
+                # ✅ 로그 출력 추가
+        print(" 판단 결과")
+        print(" 병원 이름:", hospital_name)
+        print(" 진료과:", departments)
+        print(" 상태 요약:", condition_summary)
+        print(" Gemini 응답:", result)
+
+
         return result == "yes"
     except Exception as e:
+
+        print(" Gemini 판단 오류:", e)
+
+        
         return False
 
 

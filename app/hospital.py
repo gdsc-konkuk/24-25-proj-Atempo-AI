@@ -185,46 +185,32 @@ def enrich_hospital_info(hospitals, user_lat, user_lng):
 
     return result
 
-def is_hospital_suitable_by_name_and_dept(condition_summary: str, hospital_name: str, departments: list[str]) -> bool:
+def is_hospital_suitable_by_name_and_condition(condition_text: str, hospital_name: str) -> bool:
     prompt = f"""
-A patient has the following condition: {condition_summary}
+A patient needs emergency help for the following condition:
+"{condition_text}"
 
-Hospital name: {hospital_name}
-Departments: {', '.join(departments)}
+Hospital name: "{hospital_name}"
 
+Based only on the hospital's name and the patient's condition, is this hospital likely able to handle the case?
 
-Based on the hospital's name and its listed departments, does it seem likely that this hospital could appropriately handle the patient's condition?
+Consider hospitals that are general, large, or have names suggesting specialization in relevant care as likely suitable.
 
-Consider hospitals that are general, large, or specialized in relevant areas as likely suitable.
-
-Respond with "Yes" if the hospital might reasonably be able to treat the patient, even if not explicitly listed. Otherwise, respond with "No".
+Respond with "Yes" if the hospital might reasonably be able to treat the patient, even if not explicitly clear. Otherwise, respond with "No".
 
 Answer only with "Yes" or "No".
 """
     try:
         response = llm.invoke(prompt)
         result = response.content.strip().lower()
-
-                # ✅ 로그 출력 추가
-        print(" 판단 결과")
-        print(" 병원 이름:", hospital_name)
-        print(" 진료과:", departments)
-        print(" 상태 요약:", condition_summary)
-        print(" Gemini 응답:", result)
-
-
         return result == "yes"
     except Exception as e:
-
-        print(" Gemini 판단 오류:", e)
-
-        
         return False
 
 
-def filter_hospitals_by_condition(hospitals: list[dict], condition_summary: str) -> list[dict]:
+def filter_hospitals_by_condition(hospitals: list[dict], condition_text: str) -> list[dict]:
     filtered = []
     for hospital in hospitals:
-        if is_hospital_suitable_by_name_and_dept(condition_summary, hospital["name"], hospital["departments"]):
+        if is_hospital_suitable_by_name_and_condition(condition_text, hospital["name"]):
             filtered.append(hospital)
     return filtered

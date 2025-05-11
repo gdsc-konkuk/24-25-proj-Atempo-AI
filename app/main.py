@@ -28,9 +28,7 @@ def medicall_endpoint(request_data: RequestModel):
         condition = request_data.patient_condition
 
         hospitals, error = search_hospitals(lat, lng, radius)
-        print("=== Raw hospital data ===")
-        print(hospitals)
-        print("Error:", error)
+
         if error or not hospitals: 
             return {
                 "hospital_list": [],
@@ -40,7 +38,7 @@ def medicall_endpoint(request_data: RequestModel):
         hospital_list = enrich_hospital_info(hospitals, lat, lng)
         condition_summary = summarize_condition(condition)
 
-        hospital_list = filter_hospitals_by_condition(hospital_list, condition)
+        hospital_list = filter_hospitals_by_condition(hospital_list, condition_summary)
 
         ars_message = (
             f"This is Medicall, an AI-powered emergency room matching system. A patient with {condition_summary} "

@@ -198,7 +198,6 @@ Consider hospitals that are general, large, or have names suggesting specializat
 
 Respond with "Yes" if the hospital might reasonably be able to treat the patient, even if not explicitly clear. Otherwise, respond with "No".
 
-Answer only with "Yes" or "No".
 """
     try:
         response = llm.invoke(prompt)

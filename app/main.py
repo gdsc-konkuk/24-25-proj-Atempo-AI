@@ -7,7 +7,8 @@ from app.schemas import RequestModel
 from app.hospital import (
     search_hospitals,
     enrich_hospital_info,
-    summarize_condition
+    summarize_condition,
+    filter_hospitals_by_condition
 )
 
 app = FastAPI()
@@ -37,13 +38,15 @@ def medicall_endpoint(request_data: RequestModel):
         hospital_list = enrich_hospital_info(hospitals, lat, lng)
         condition_summary = summarize_condition(condition)
 
+        filtered_hospitals = filter_hospitals_by_condition(hospital_list, condition_summary)
+
         ars_message = (
             f"This is Medicall, an AI-powered emergency room matching system. A patient with {condition_summary} "
             f"has been reported within {radius/1000:.0f} km. If your hospital can admit the patient, press 1. If not, press 2."
         )
 
         return {
-            "hospital_list": hospital_list,
+            "hospital_list": filtered_hospitals,
             "ars_message": ars_message
         }
 

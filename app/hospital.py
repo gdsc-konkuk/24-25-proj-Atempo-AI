@@ -183,3 +183,36 @@ def enrich_hospital_info(hospitals, user_lat, user_lng):
         })
 
     return result
+
+def is_hospital_suitable_by_name_and_dept(condition_summary: str, hospital_name: str, departments: list[str]) -> bool:
+    prompt = f"""
+A patient has the following condition: {condition_summary}
+
+Hospital name: {hospital_name}
+Departments: {', '.join(departments)}
+
+
+Based on the hospital's name and its listed departments, does it seem likely that this hospital could appropriately handle the patient's condition?
+
+Consider hospitals that are general, large, or specialized in relevant areas as likely suitable.
+
+If the condition is broad, unclear, or general in nature, respond "Yes" as long as the hospital seems like it could reasonably provide care.
+
+Respond with "Yes" if the hospital might reasonably be able to treat the patient, even if not explicitly listed. Otherwise, respond with "No".
+
+Answer only with "Yes" or "No".
+"""
+    try:
+        response = llm.invoke(prompt)
+        result = response.content.strip().lower()
+        return result == "yes"
+    except Exception as e:
+        return False
+
+
+def filter_hospitals_by_condition(hospitals: list[dict], condition_summary: str) -> list[dict]:
+    filtered = []
+    for hospital in hospitals:
+        if is_hospital_suitable_by_name_and_dept(condition_summary, hospital["name"], hospital["departments"]):
+            filtered.append(hospital)
+    return filtered

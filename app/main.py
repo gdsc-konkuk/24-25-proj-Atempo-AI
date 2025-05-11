@@ -38,7 +38,7 @@ def medicall_endpoint(request_data: RequestModel):
         hospital_list = enrich_hospital_info(hospitals, lat, lng)
         condition_summary = summarize_condition(condition)
 
-        filtered_hospitals = filter_hospitals_by_condition(hospital_list, condition_summary)
+        hospital_list = filter_hospitals_by_condition(hospital_list, condition_summary)
 
         ars_message = (
             f"This is Medicall, an AI-powered emergency room matching system. A patient with {condition_summary} "
@@ -46,7 +46,7 @@ def medicall_endpoint(request_data: RequestModel):
         )
 
         return {
-            "hospital_list": filtered_hospitals,
+            "hospital_list": hospital_list,
             "ars_message": ars_message
         }
 

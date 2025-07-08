@@ -2,12 +2,12 @@ from pydantic import BaseModel
 from typing import List
 
 class Location(BaseModel):
-    latitude: float
-    longitude: float
+    latitude: float # 위도
+    longitude: float # 경도
 
 class RequestModel(BaseModel):
     location: Location
-    search_radius: int
+    search_radius: int # 검색 반경 (미터 단위)
     patient_condition: str
 
 class Hospital(BaseModel):

@@ -10,7 +10,6 @@ load_dotenv(dotenv_path=env_path)
 
 # Load environment variables
 GOOGLE_PLACES_API_KEY = os.getenv("GOOGLE_PLACES_API_KEY")
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 # Initialize Gemini model
 llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash-lite", temperature=0.4)
